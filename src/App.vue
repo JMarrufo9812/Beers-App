@@ -3,29 +3,30 @@
     <v-main style="background: #1c1c1c">
       <Header class="mb-12">
         <v-row>
-          <v-col class="d-flex align-center" cols="2">
-            <h1 class="secondary--text">Cervezas</h1>
+          <v-col :cols="isDeskop ? '2' : '12'" class="d-flex align-center">
+            <h1 class="secondary--text">Beers</h1>
           </v-col>
-          <v-col class="d-flex align-center">
+          <v-col :cols="isDeskop ? '4' : '12'" class="d-flex align-center">
+            <!-- <span class="text-body-1 mr-2 white--text">Search by</span> -->
+            <Input
+              v-model="filter"
+              :items="filterOptions"
+              :type="'SELECT'"
+              :dense="true"
+              :hideDetails="true"
+              :color="'secondary'"
+              :dark="true"
+              :label="'Search by'"
+            />
+          </v-col>
+          <v-col :cols="isDeskop ? '4' : '12'" class="d-flex align-center">
             <Input
               v-model="search"
               :type="'TEXT'"
               :dense="true"
               :hideDetails="true"
               :appendIcon="'mdi-magnify'"
-              :label="'Buscar'"
-              :color="'secondary'"
-              :dark="true"
-            />
-          </v-col>
-          <v-col class="d-flex align-center">
-            <span class="text-body-1 mr-2 white--text">Buscar por</span>
-            <Input
-              v-model="search"
-              :items="selectOptions"
-              :type="'SELECT'"
-              :dense="true"
-              :hideDetails="true"
+              :label="'Search'"
               :color="'secondary'"
               :dark="true"
             />
@@ -38,9 +39,34 @@
             class="d-flex justify-center"
             v-for="beer in beers"
             :key="beer.id"
-            cols="4"
+            lg="4"
+            md="6"
+            sm="12"
           >
             <BeerCard :beer="beer"></BeerCard>
+          </v-col>
+          <v-col cols="12" class="my-12 d-flex justify-center">
+            <v-btn
+              @click="prevPage"
+              class="mr-6"
+              x-large
+              depressed
+              color="secondary"
+              :disabled="page === 1"
+              dark
+              >previus</v-btn
+            >
+            <v-btn class="mr-6" x-large depressed color="secondary"
+              >page {{ page }}</v-btn
+            >
+            <v-btn
+              class="mr-6"
+              x-large
+              depressed
+              color="secondary"
+              @click="nextPage"
+              >next</v-btn
+            >
           </v-col>
         </v-row>
         <!-- <v-card rounded>
@@ -57,6 +83,10 @@
         </v-card> -->
       </Beers>
     </v-main>
+    <v-footer>
+      <v-spacer></v-spacer>
+      <div>Beers &copy; {{ new Date().getFullYear() }}</div>
+    </v-footer>
   </v-app>
 </template>
 
@@ -80,6 +110,8 @@ export default {
   data() {
     return {
       search: "",
+      filter: "beer_name",
+      page: 1,
       headers: [
         {
           text: "Nombre",
@@ -94,12 +126,38 @@ export default {
           value: "image",
         },
       ],
-      selectOptions: ["Nombre", "Malta"],
+      filterOptions: ["beer_name", "yeast", "hops", "malt", "food"],
     };
   },
-  computed: mapGetters(["beers"]),
+  computed: {
+    ...mapGetters(["beers"]),
+    isDeskop() {
+      return this.$vuetify.breakpoint.md || this.$vuetify.breakpoint.lg;
+    },
+  },
+  watch: {
+    page(number) {
+      this.$store.dispatch("getBeers", { page: number });
+    },
+    search(value) {
+      this.$store.dispatch("getSearchBeers", {
+        value: value,
+        filter: this.filter,
+      });
+    },
+  },
+  methods: {
+    nextPage() {
+      this.page += 1;
+    },
+    prevPage() {
+      if (this.page !== 1) {
+        this.page -= 1;
+      }
+    },
+  },
   mounted() {
-    this.$store.dispatch("getAllBeers");
+    this.$store.dispatch("getBeers", { page: 1 });
   },
 };
 </script>

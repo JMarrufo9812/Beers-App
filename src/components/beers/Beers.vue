@@ -1,10 +1,6 @@
 <template>
   <v-container fluid>
-    <v-row no-gutters>
-      <v-col>
-        <slot />
-      </v-col>
-    </v-row>
+    <slot />
   </v-container>
 </template>
 

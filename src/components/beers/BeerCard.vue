@@ -9,33 +9,30 @@
     <v-card-title class="secondary--text justify-center">
       {{ beer.name }}
     </v-card-title>
-    <div class="d-flex justify-center" style="height: 100%">
-    <v-icon class="mdi-arrow"></v-icon>
-      <v-card
-        width="70%"
-        height="100%"
-        flat
-        style="background-color: transparent"
-      >
-        <v-card
-          flat
-          style="background-color: transparent"
-          class="d-flex align-content-center justify-center"
-          height="60%"
-          width="100%"
-        >
-          <v-img
-            :src="beer.image_url"
-            alt=""
-            max-height="100%"
-            max-width="80"
-          />
-        </v-card>
+    <v-card-text class="d-flex justify-center" style="height: 100%">
+      <v-img :src="beer.image_url" alt="" max-height="70%" max-width="80" />
+      <div class="ml-4">
         <h4 class="white--text">
           {{ beer.brewers_tips }}
         </h4>
-      </v-card>
-    </div>
+        <h3 class="secondary--text mt-2">Characteristics:</h3>
+        <v-list style="background-color: transparent" dense>
+          <v-list-item dark> - ABV: {{ beer.abv }} </v-list-item>
+          <v-list-item dark>
+            - Attenuation level:
+            {{ beer.attenuation_level }}
+          </v-list-item>
+          <v-list-item dense dark>
+            - EBC:
+            {{ beer.ebc }}
+          </v-list-item>
+          <v-list-item dense dark>
+            - IBU:
+            {{ beer.ibu }}
+          </v-list-item>
+        </v-list>
+      </div>
+    </v-card-text>
   </v-card>
 </template>
 
