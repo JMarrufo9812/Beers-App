@@ -18,16 +18,12 @@ const actions = {
       `beers?page=${page}&per_page=24`
     );
     if (status === 200) {
-      console.log(data);
       commit("SET_beers", data);
     }
   },
   async getSearchBeers({ commit }, { value, filter }) {
-    const { status, data } = await baseApi.get(
-      `beers?page=${1}&per_page=24&${filter}=${value}`
-    );
+    const { status, data } = await baseApi.get(`beers?${filter}=${value}`);
     if (status === 200) {
-      console.log(data);
       commit("SET_beers", data);
     }
   },
@@ -36,7 +32,6 @@ const actions = {
 // mutations
 const mutations = {
   SET_beers(state, beers) {
-    console.log("mutation", beers);
     state.beers = beers;
   },
 };
