@@ -14,7 +14,6 @@ utilice varios principios de solid para armar la estructura y componentes de la 
 
 - Principio de sustitución de Liskov
   existe un archivo base de la api el cual se encarga de dos cosas la primera es de contener la url base de la api y la segunda de tener los metodos sin embargo esta funcion no hace nada hasta que es llamada y recibe como parametro una url que indicaara hacia donde se hara la peticion de tal froma que si se requiriera cambiar la api solo tendriamos que sustituir el archivo base incluso si quisieramos cambiar de libreria la configuracion solo se haria desde aqui y no en todas las funciones donde hacemos peticiones
-
 # ¿porque no use vue router?
 - Por fines practicos y al ser una sola vista no vi la necesidad de utlizarlo sin embargo si la app requiriera de mas vistas separaria las vistas en una carpeta con su respectivo nombre y cada vista cargaria los componenetes que fueran necesarios y la app cambiaria a tener una estrucutra asi
 app > router > views > componenets
@@ -52,3 +51,9 @@ vez has tenido que hacerlo?
      "maritalStatus": "casado",
      "hobbies": "modelado en 3D, leer, jugar videojuegos" 
  }
+
+# ideas
+- hay varias cosas que podria mejorar de la app como:
+- un boton en cada card de la cerveza que al dar click te muestre mas detalladamente la informacion de cada cerveza
+- skeleton loadings de cada card antes de cargar
+- filtros mas personalizados por fechas y de mas
