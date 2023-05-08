@@ -1,4 +1,4 @@
-# easygoband
+# Beer App
 
 ## Project setup
 ```
