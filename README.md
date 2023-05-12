@@ -1,4 +1,4 @@
-# Beer App
+# Beers App V2
 
 ## Project setup
 ```
