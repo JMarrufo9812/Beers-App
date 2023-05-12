@@ -1,4 +1,6 @@
-import baseApi from "../../api/base.api";
+import { BeersRequests } from '@/services/beers.service'
+
+const beersService = new BeersRequests()
 
 const state = () => ({
   beers: [],
@@ -14,19 +16,18 @@ const getters = {
 // actions
 const actions = {
   async getBeers({ commit }, { page }) {
-    const { status, data } = await baseApi.get(
-      `beers?page=${page}&per_page=24`
-    );
-    if (status === 200) {
+    beersService.getBeers(page, 24).then((data) => {
       commit("SET_beers", data);
-    }
+    }).catch((err) => {
+      console.log('Error:', err)
+    })
   },
-  async getSearchBeers({ commit }, { value, filter }) {
-    const { status, data } = await baseApi.get(`beers?${filter}=${value}`);
-    if (status === 200) {
-      commit("SET_beers", data);
-    }
-  },
+  // async getSearchBeers({ commit }, { value, filter }) {
+    // const { status, data } = await baseApi.get(`beers?${filter}=${value}`);
+    // if (status === 200) {
+    //   commit("SET_beers", data);
+    // }
+  // },
 };
 
 // mutations
